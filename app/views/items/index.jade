@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Commerce
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    h1 Commerce
+    nav
+      ul
+        li: a(href='/') Home
+        li: a(href='/about') About
+        li: a(href='/faq') FAQ
+
+    each item in items
+      ul
+        li=item.name
+        li=item.dimensions.length
+        li=item.dimensions.width
+        li=item.dimensions.height
+        li=item.color
+        li=item.weight
+        li=item.quantity
+        li=item.msrp
+        li=item.percentOff
+        li=item.cost()
