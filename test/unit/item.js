@@ -29,14 +29,13 @@ describe('Item', function(){
       i1.save(function(){
         i2.save(function(){
           i3.save(function(){
-            done();     
+            done();
           });
         });
       });
     });
   });
 
-describe('Item', function(){
   describe('constructor', function(){
     it('should create a new Item object', function(){
       var o = {name:'iPad', dimensions:{l:'3', w:'4', h:'5'}, weight:'2.5', color:'pink', quantity:'30', msrp:'200', percentOff:'5'};
@@ -51,36 +50,59 @@ describe('Item', function(){
       expect(ipad.color).to.equal('pink');
       expect(ipad.quantity).to.equal(30);
       expect(ipad.msrp).to.equal(200);
-      expect(ipad.percentOff).to.equal(0.05);
+      expect(ipad.percentOff).to.equal(5);
     });
   });
+
   describe('#cost', function(){
-    it('should give the new cost of item', function(){
+    it('should compute cost for an item', function(){
       var o = {name:'iPad', dimensions:{l:'3', w:'4', h:'5'}, weight:'2.5', color:'pink', quantity:'30', msrp:'200', percentOff:'5'};
       var ipad = new Item(o);
+      var cost = ipad.cost();
 
-      expect(ipad).to.be.instanceof(Item);
-      expect(ipad.cost()).to.equal(190);
+      expect(cost).to.be.closeTo(190, 0.1);
     });
   });
+
   describe('#save', function(){
-    it('should save an item in the database', function(done){
+    it('should save an item to the database', function(done){
       var o = {name:'iPad', dimensions:{l:'3', w:'4', h:'5'}, weight:'2.5', color:'pink', quantity:'30', msrp:'200', percentOff:'5'};
       var ipad = new Item(o);
       ipad.save(function(){
-      expect(ipad._id).to.be.instanceof(Mongo.ObjectID);
+        expect(ipad._id).to.be.instanceof(Mongo.ObjectID);
         done();
       });
     });
   });
+
   describe('.all', function(){
-    it('should find all items', function(done){
+    it('should get all items from database', function(done){
       Item.all(function(items){
         expect(items).to.have.length(3);
-        expect(items[0]).to.respondTo('cost');        
-          done();
+        expect(items[0]).to.respondTo('cost');
+        done();
       });
     });
   });
-});
+
+  describe('.findById', function(){
+    it('should find an item by its id', function(done){
+      Item.findById(i1._id.toString(), function(item){
+        expect(item.name).to.equal('iPad');
+        expect(item).to.respondTo('cost');
+        done();
+      });
+    });
+  });
+
+  describe('.deleteById', function(){
+    it('should delete an item by its id', function(done){
+      Item.deleteById(i1._id.toString(), function(){
+        Item.all(function(items){
+          expect(items).to.have.length(2);
+          done();
+        });
+      });
+    });
+  });
 });

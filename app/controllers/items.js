@@ -19,3 +19,15 @@ exports.index = function(req, res){
     res.render('items/index', {items:items}); 
   });
 };
+
+exports.show = function(req, res){
+  Item.findByID(req.params.id, function(item){
+    res.render('items/show', {item:item});
+  });
+};
+
+exports.destroy = function(req, res){
+  Item.deleteByID(req.params.id, function(){
+    res.redirect('/items');
+  });
+};
