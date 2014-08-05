@@ -1,17 +1,4 @@
-doctype html
-html
-  head
-    meta(charset='utf-8')
-    title Commerce
-    link(rel='stylesheet', href='/css/style.css')
-  body
-    h1 Commerce
-    nav
-      ul
-        li: a(href='/') Home
-        li: a(href='/about') About
-        li: a(href='/faq') FAQ
-        li: a(href='/items/new') Add New Items
-        li: a(href='/items') Show Items
+extends ../shared/template
 
-    h2 Home Page!
+block content
+  h2 Home
