@@ -10,7 +10,7 @@ exports.create = function(req, res){
   console.log(req.body);
   var item = new Item(req.body);
   item.save(function(){
-    res.redirect('/');
+    res.redirect('/items');
   });
 };
 

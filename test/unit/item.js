@@ -11,7 +11,7 @@ var i1, i2, i3;
 
 describe('Item', function(){
   before(function(done){
-    dbConnect('commerce-test', function(){
+    dbConnect('commerce', function(){
       done();
     });
   });
